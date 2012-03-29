@@ -1,8 +1,18 @@
 \newcommand{\SoftName}{GMemorise}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
 
 \documentclass[a4paper]{article}
 \usepackage[pdftex]{graphicx}
+\usepackage{overcite}
+
+\title{Measuring the Effectiveness of a Subset of Game Mechanics on Rote Memorisation of Vocabulary in the Study of a Foreign Language}
+\date{30 March, 2012}
+\author{Jordan West}
+
 \begin{document}
+
+% \maketitle
+\input{titlepage.tex}
 
 \tableofcontents
 \newpage
@@ -12,31 +22,33 @@
 
 % TOPIC DEFINITION %
 \section{Topic Definition}
-\subsection{Background}
+\subsection{Background} \label{background}
 \input{background.tex}
 \subsection{Purpose}
-\subsection{Hypothesis}
+\input{purpose.tex}
 \subsection{Motivations}
+\input{motivations.tex}
 \subsection{Method}
+\input{method.tex}
+\subsection{Hypothesis}
+\input{hypothesis.tex}
 
 % PROJECT PLAN %
 \section{Project Plan}
 \subsection{Scope}
 \subsubsection{Platform}
+\input{platform.tex}
 \subsubsection{Features}
-\subsubsection{Data Collection}
+\input{features.tex}
+\subsubsection{Data Collection} \label{scope_datacollection}
 \input{datacollection.tex}
 \subsubsection{Exclusions}
+\input{exclusions.tex}
 \subsection{Milestones}
 \subsection{Schedule}
-\begin{tabular} { l | l || l }
-	Week & Beginning & Task \\
-	\hline
-	Week 1 - 5 & 28 Feb - 30 Mar & Project Proposal and Planning \\
-	Week 6      & 2 Apr           & Gather Project Requirements   
-\end{tabular}
+\input{schedule.tex}
 \section{Risk Assessment}
-
+\input{riskassessment.tex}
 \newpage
 \bibliographystyle{plain}
 \bibliography{thesis}
