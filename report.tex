@@ -1,13 +1,20 @@
 \newcommand{\SoftName}{GMemorise}
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+\makeatletter
+\g@addto@macro\@floatboxreset\centering
+\makeatother
 
 \documentclass[a4paper]{article}
+\usepackage[margin=3cm]{geometry}
 \usepackage[pdftex]{graphicx}
 \usepackage{float}
 \usepackage{hyperref}
 \usepackage[parfill]{parskip}
+\usepackage[justification=centering]{caption}
+%\usepackage{biblatex}
+%\bibliography{thesis.bib}
 
-\title{Machine Learning for Predicting Responses to Spaced Repetition Flash Cards}
+\title{Predicting Responses to Spaced Repetition Flash Cards with Machine Learning Techniques}
 \date{5 November, 2012}
 \author{Jordan West}
 
@@ -28,14 +35,25 @@
 
 \bibliographystyle{plain}
 \bibliography{thesis}
+%\printbibliography
 
 \section{Acknowledgments}
+This thesis would not have been possible without the support of my
+supervisor Dr. Mark Schulz whose input and guidance
+has been invaluable for the project.
+
 I would like to thank Dr Yuriko Nagata for her assistance with this and for allowing
 me to introduce the software to her students.
 
-I would also like to 
+Dr Michael Harrington of the School of Languages and Comparative Cultural Studies
+for his advice with the online learning software, particularly the suggestion
+to record the time students take to review individual words.
 
-Finally I would like to thank my supervisor Dr. Mark Schulz. His input and guidance
-has been invaluable for the project. 
+I would also like to thank the UQ CEIT team for their help with this project -
+particularly Alan Cody and Phil Long.
+
+Last but not least I want to thank my friends for their encouragement and
+for putting up with me throughout the project, and Mum and Dad for supporting me
+% TODO Finish Acknowledgements
 
 \end{document}
