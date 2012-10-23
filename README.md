@@ -13,7 +13,7 @@ Undergraduate Thesis Report
 This is a repository for version control of my thesis final report.
 The report is written in and requires Latex to compile to pdf.
 
-A PDF of the report is available here: [Report PDF](http://www.github.com/jordwest/thesis_report/report.pdf)
+A PDF of the report is available here: [Report PDF](https://github.com/jordwest/Thesis-Report/raw/master/report.pdf)
 
 *2012 Jordan West*
 
