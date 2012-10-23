@@ -3,8 +3,8 @@ Predicting Responses to Spaced Repetition Flash Cards with Machine Learning Tech
 
 Other repositories for this project:
  1.  Thesis Report (Current)
- 2.  [Supporting Files](http://www.github.com/jordwest/thesis)
- 3.  [Membit online learning software](http://www.github.com/jordwest/membit)
+ 2.  [Supporting Files](http://www.github.com/jordwest/thesis#predicting-responses-to-spaced-repetition-flash-cards-with-machine-learning-techniques)
+ 3.  [Membit online learning software](http://www.github.com/jordwest/membit#predicting-responses-to-spaced-repetition-flash-cards-with-machine-learning-techniques)
 
 
 Undergraduate Thesis Report
