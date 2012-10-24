@@ -11,8 +11,9 @@
 \usepackage{hyperref}
 \usepackage[parfill]{parskip}
 \usepackage[justification=centering]{caption}
-%\usepackage{biblatex}
-%\bibliography{thesis.bib}
+\usepackage{url}
+\usepackage{biblatex}
+\bibliography{thesis.bib}
 
 \title{Predicting Responses to Spaced Repetition Flash Cards with Machine Learning Techniques}
 \date{5 November, 2012}
@@ -33,10 +34,6 @@
 \input{results.tex}
 \input{discussion.tex}
 
-\bibliographystyle{plain}
-\bibliography{thesis}
-%\printbibliography
-
 \section{Acknowledgments}
 This thesis would not have been possible without the support of my
 supervisor Dr. Mark Schulz whose input and guidance
@@ -55,5 +52,25 @@ particularly Alan Cody and Phil Long.
 Last but not least I want to thank my friends for their encouragement and
 for putting up with me throughout the project, and Mum and Dad for supporting me
 % TODO Finish Acknowledgements
+
+%\bibliographystyle{plain}
+%\bibliography{thesis}
+\printbibliography
+
+\appendix
+\section{Participant Information Sheet}
+\label{appendix_participant_info_sheet}
+\fbox{\includegraphics[page=1,width=15cm]{appendix/participant_info_sheet.pdf}}
+\section{Participant Consent Form}
+\label{appendix_participant_consent_form}
+\fbox{\includegraphics[page=1,width=15cm]{appendix/participant_consent_form.pdf}}
+\section{Original Wireframes}
+\label{appendix_wireframes}
+\fbox{\includegraphics[page=1,width=15cm]{appendix/wireframes.pdf}}\newpage
+\fbox{\includegraphics[page=2,width=15cm]{appendix/wireframes.pdf}}
+\fbox{\includegraphics[page=3,width=15cm]{appendix/wireframes.pdf}}
+\fbox{\includegraphics[page=4,width=15cm]{appendix/wireframes.pdf}}
+\fbox{\includegraphics[page=5,width=15cm]{appendix/wireframes.pdf}}
+\fbox{\includegraphics[page=6,width=15cm]{appendix/wireframes.pdf}}
 
 \end{document}
