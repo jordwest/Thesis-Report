@@ -1,7 +1,7 @@
-\section{Methods and Materials}
+\chapter{Methods and Materials}
 \label{methods}
-\subsection{Experimental Design}
-\subsection{Ethical Clearance}
+\section{Experimental Design}
+\section{Ethical Clearance}
 \label{methods_ethical}
 As with any project involving humans, the details of the project must be reviewed and 
 approved by the University Human Ethics Committee prior to any student participation.
@@ -22,11 +22,39 @@ students. Participants were also given an information sheet (See Appendix
 \ref{appendix_participant_info_sheet}) and a consent form (See Appendix
 \ref{appendix_participant_consent_form}) to sign and return before receiving a registration card.
 
-\subsection{Software Design}
+\section{Online Learning Software Design}
 \label{methods_softwaredesign}
-\subsubsection{Requirements}
+\subsection{Requirements}
 
-\subsubsection{Tools}
+A number of requirements were set out for the online learning software. These are listed below along
+with how these requirements are achieved.
+
+\paragraph{Should be easily accessible to students.} Removing barriers to use will
+encourage students to use the software more often. %TODO Reference
+
+By providing access to the learning environment online via a web-based interface, students can
+access the software anywhere - including from university computers without requiring installation
+of any software.
+
+\paragraph{Should be secure and anonymous.} Both for peace of mind for students, and to fulfill
+ethical requirements data must be collected anonymously and securely. Students may be more
+reluctant to use the software with the knowledge that their individual progress is being tracked. %TODO Ref
+
+This is achieved by allocating each student a unique code with which the log in. Students are then
+recorded in the database using a newly assigned number which is unknown to the users. Downloaded review
+data should only refer to users with this number, meaning that even if the registration code is known,
+a user cannot be identified from downloaded review data. Furthermore, all data should be stored on a secure
+password protected server and all usage of the system via a secure connection to the server.
+
+\paragraph{Should be easy to update and/or fix bugs.} Since the timespan is 
+
+\paragraph{Data should be captured and stored immediately.} Since the project period is short,
+users cannot be relied upon to submit their data manually in time for analysis. Therefore reviews
+should be recorded immediately.
+
+\paragraph{Only nominated students should be able to access the system}
+
+\subsection{Tools}
 This section outlines the software tools that will be used for the project and reasoning for
 choosing these tools.
 \paragraph{Git and Github}
@@ -84,6 +112,7 @@ to the live application quickly in order to respond to bugs and to reduce time s
 
 \paragraph{Backbone.JS}
 (\url{http://www.backbonejs.org/})
+
 Backbone.js is an open source Javascript framework providing a model oriented structure for web applications.
 It was selected because\ldots
 
@@ -100,7 +129,9 @@ on the website because of the features it provides in addition to recommendation
 \paragraph{Twitter Bootstrap}
 (\url{http://twitter.github.com/bootstrap})
 
-Twitter Bootstrap is a set of default styles for websites and web applications, provided as open-source by Twitter. Using Twitter Bootstrap rapidly speeds up theming of a web application with default looks for navigation, buttons, text and layout.
+Twitter Bootstrap is a set of default styles for websites and web applications,
+provided as open-source by Twitter. Using Twitter Bootstrap rapidly speeds up theming of
+a web application with default looks for navigation, buttons, text and layout.
 
 
 See figure \ref{twitterbootstrap} for a comparison of default styling with and without Twitter Bootstrap
@@ -117,15 +148,155 @@ system which provides a reduced screen size (ie. smartphone) layout
   at the same time. Twitter Bootstrap was also chosen for this reason.
   
 \paragraph{The R Programming Language}
-R is an open source programming language designed primarily for statistical computing. 
+R is an open source programming language designed primarily for statistical computing.
+Many packages are available for R which provide functionality including various
+machine learning algorithms.
 
-\subsubsection{Data Entry}
-\subsubsection{Screen Mockups}
-\subsubsection{Spaced Repetition Algorithm}
-\subsubsection{Data storage, formatting and output}
+R was selected since it is open source and therefore code written is possible for others to recreate
+the experiment without purchasing expensive software such as MATLAB. Additionally, the libraries
+available in R (such as e1071, the Support Vector Machine library) generally provide more customisability
+over those available in MATLAB as standard.
 
-\subsection{Data Analysis and Prediction}
-\subsubsection{R Programming Language}
-\subsubsection{Usage Data}
-\subsubsection{Forgetting Curves}
-\subsubsection{Prediction of Recall}
+\subsection{Data Entry}
+\subsection{Screen Mockups}
+\subsection{Spaced Repetition Algorithm}
+\subsection{Data storage, formatting and output}
+
+* Insert list of tables and fields in the database %TODO DB Schema
+
+
+Review data is made available via an administrator login. The software converts the entire
+table of anonymised reviews to a .CSV file for download. CSV was chosen because of its portability --
+almost all data analysis packages support CSV files. Data could also be filtered before download, 
+to remove unwanted entries. Most importantly, it was made possible to filter out `new' reviews, ie.
+reviews for which it was the first time for a student to study a word. These reviews contain almost
+no useful data for prediction since there is no history for that student reviewing that word.
+
+Fields contained in the downloaded review data are described in table \ref{tbl_csvfields}
+
+\begin{table}[h!]
+\caption{Fields contained within downloaded data files}
+\label{tbl_csvfields}
+\begin{tabular}{|p{4cm}|c|p{9cm}|}
+\hline
+Field & Type & Description \\
+\hline
+User Word ID  & ID & A unique ID for a user and vocabulary item pair (a user-word). \\
+Word ID  & ID & A unique ID for each vocabulary item. \\
+User ID  & ID & A unique ID for each user. \\
+Was New? & Boolean & True if this is the first time the user has studied this vocabulary item. False otherwise. \\
+Overdue Time & Continuous & Number of days after the vocabulary item was due for review that it was studied.\\
+Previous Incorrect Count & Discrete & Number of times this vocabulary item \textbf{has not} been recalled correctly before this review. \\
+Previous Correct Count & Discrete & Number of times this vocabulary item \textbf{has} been recalled correctly before this review. \\
+Previous Easiness Factor & Continuous & The easiness factor that was assigned to this vocabulary item for this user before this review. \\
+User Rated Answer & Discrete & The answer the student selected (0 - 5) \\
+Time to Answer & Continuous & The amount of time between seeing the front of the flash-card and selecting an answer. \\
+Correct? & Boolean & Whether the recall was considered correct. FALSE if answer selected was 0-2, TRUE if 3-5. \\
+Previous Repetition Number & Discrete & The repetition number before this review. NULL = This is the first review, 0 = The previous review was the first. Note that this number is reset after a card is failed. \\
+Previous Interval  & Continuous & The interval, or amount of time between the previous review and the due date for this review. \\
+Actual Interval & Continuous & The actual time between the previous review and the current review.\\
+Was Failed? & Boolean & Whether the user-word was failed on the previous review. TRUE if the card was failed before this review, FALSE if the card was not failed.\\
+Previous Attempts & Discrete & Total number of attempts at reviewing this user-word prior to this review \\
+Previous Answer & Discrete & The user rated answer of the previous review \\
+Previous Time to Answer & Continuous & The time the user took to answer on the previous review\\
+Word Average Easiness Factor & Continuous & Average easiness factor for this word for all users\\
+\hline
+\end{tabular}
+\end{table}
+
+\section{Data Analysis and Prediction}
+\subsection{Forgetting Curves}
+
+Forgetting curves can be generated from the recorded reviews by grouping review data on the following
+variables:
+\begin{itemize}
+  \item Repetition number
+  \item Actual interval
+\end{itemize}
+
+Given these groups, the chance of remembering a fact for a specific repetition number and interval 
+can be estimated with equation \ref{eqn_forgettingcurveprob}:
+
+\begin{equation}
+\label{eqn_forgettingcurveprob}
+P(correct,incorrect) = \frac{\sum correct}{\sum correct + \sum incorrect}
+\end{equation}
+
+However with groups of data for which there is minimal review data, this equation will yield
+large errors. For example, if a grouping of data is as shown in table \ref{tbl_forgettingcurvegrouping}:
+
+\begin{table}[h!]
+\caption{Example of too few review samples after grouping}
+\label{tbl_forgettingcurvegrouping}
+\begin{tabular}{|c|c||c|}
+\hline
+Repetition Number & Actual Interval & Correct?\\
+\hline
+3 & 18 & TRUE\\
+3 & 18 & FALSE\\
+3 & 18 & FALSE\\
+\hline
+\end{tabular}
+\end{table}
+
+Given the sample of the three reviews in table \ref{tbl_forgettingcurvegrouping}
+-- equation \ref{eqn_forgettingcurveprob} would yield $P = \frac{1}{1+2} = 0.333$.
+However the standard error as calculated with equation \ref{eqn_standarderror} yields
+$\sqrt{\frac{0.333(1 - 0.333)}{3}} = 0.272$
+
+\begin{equation}
+\label{eqn_standarderror}
+\text{Standard Error} = \sqrt{\frac{p(1-p)}{n}}
+\end{equation}
+
+We cannot say with any accuracy from this data that the probability of remembering a word
+given these inputs is 0.333. On the other hand, with a sampling of thousands of reviews for a
+given repetition number and actual interval the error is reduced and a probability can
+be considered more accurate. %TODO Probability Ref
+
+This issue is one of gathering enough data, and so various thresholds for minimum number of reviews
+to give an adequate probability will be arbitrarily selected based on the amount of data available.
+
+Forgetting curves can also be generated from running data through the machine learning
+algorithms trained upon the data. By entering a full range of possible variable values through
+the trained machine learning algorithms, we can generate a much larger dataset than original
+to work with. This will also be explored and compared with the forgetting curves generated from
+the true data.
+
+Due to the limited amount of data expected, forgetting curves will be constructed on the basis of
+the entire set of users and not for individual users.
+
+\subsection{Prediction of Recall}
+
+The inputs shown in table \ref{tbl_inputoutputs} are the same variables which are
+either stored or can be calculated from values stored alongside each user-word in
+the database by the spaced repetition algorithm. This means that given a well
+trained algorithm and a set of user-words for a user, it should be possible to
+calculate which words the user will correctly recall at any given point in time.
+
+
+
+\begin{table}[h!]
+\caption{Inputs and Outputs to Machine Learning Algorithms}
+\label{tbl_inputoutputs}
+\begin{tabular}{|c|c|c|}
+\hline
+Field & Type & Input/Output \\
+\hline
+Overdue Time & Continuous & Input \\
+Previous Incorrect Count & Discrete & Input \\
+Previous Correct Count & Discrete & Input \\
+Previous Easiness Factor & Continuous & Input \\
+Previous Repetition Number & Discrete & Input \\
+Previous Interval & Continuous & Input \\
+Actual Interval & Continuous & Input \\
+Previous Attempts & Discrete & Input \\
+Previous Answer & Discrete & Input \\
+Previous Time to Answer & Continuous & Input \\
+Word Average Easiness Factor & Continuous & Input \\
+\hline
+User Rated Answer & Discrete & Output \\
+Correct & Boolean & Output \\
+\hline
+\end{tabular}
+\end{table}

@@ -1,11 +1,152 @@
-\section{Background}
+\chapter{Background}
 \label{background}
+\section{Definitions}
+This section outlines some terms used for convenience in this report.
+\begin{description}
+\item[Flash-card] A method of memorising facts where a physical card is written with a question on one side and the answer on the other.
+\item[Review] A single review of a flash-card. The user is shown a vocabulary item in Japanese and must recall the meaning and pronounciation of the word. 
+\item[Fact] A single vocabulary item with associated meaning and pronounciation.
+\end{description}
+\section{Machine Learning} \label{background_machinelearning}
+When developing a computer algorithm which takes some data as an input and returns an output,
+we will usually look at the underlying mechanism as to how we come to that conclusion. However it is not
+always possible to know what is the underlying mechanism which produces an output
+given certain inputs.
 
-\subsection{Machine Learning} \label{background_machinelearning}
-\subsubsection{Neural Networks}
-\subsubsection{Support Vector Machines}
-\subsection{Spaced Repetition} \label{background_spacedrepetition}
-\subsubsection*{Supermemo 2 Algorithm (SM2)}
+What makes machine learning algorithms unique is that they in a sense `learn'; given a large
+enough set of observed inputs and outputs, a machine learning algorithm builds a model which infers
+certain outputs given new inputs. We do not always need to know the underlying mechanism which
+translates a set of inputs to a set of outputs, as long as the inputs and outputs are related and
+a large enough data set is used.
+
+What is `large enough'? This of course depends upon the problem domain, the number and type of inputs and outputs,
+and how the inputs are related to the outputs. 
+
+Various types of machine learning algorithms exist, however this report focuses on classification
+algorithms -- that is algorithms which return an output as a `class' rather than as a continuous variables
+(regression). Additionally, we will only be looking at supervised learning since training data will contain
+outputs alongside inputs.
+
+The following sections describe the machine learning techniques that were used in this report.
+
+\subsection{Artificial Neural Network}
+%Multilayer perceptrons are a type of artificial neural network 
+
+\subsection{Support Vector Machines}
+\section{The Forgetting Curve} \label{background_forgettingcurves}
+The forgetting curve was first hypothesised by Hermann
+Ebbinghaus\cite{ebbinghaus_memory:_1913} who observed that forgetting tends
+to happen over time in an exponential fashion.
+
+Ebbinghaus performed experiments on himself by attempting to memorise nonsense
+syllables. He hypothesised that memory retention follows a curve similar to
+equation \ref{eqn_forgetcurve} where $R$ is the retention of the information,
+$t$ is time and $S$ is the relative strength of memory. This equation attempts to
+estimate the rate at which a person forgets newly learned information by capturing
+the exponential nature of forgetting which Ebbinghaus observed.
+
+\begin{equation}
+\label{eqn_forgetcurve}
+R = e^{\frac{-t}{S}}
+\end{equation}
+
+The equation
+is not intended to provide quantitative prediction of recall but rather to illustrate
+the point that most of the `forgetting' happens soon after learning. Furthermore,
+the equation illustrates that if the `strength of memory' $S$ can
+be increased then the decay of the curve can be hampered.
+
+
+
+\section{Spaced Repetition} \label{background_spacedrepetition}
+Spaced repetition is a method for memorising pieces of information by reviewing
+each piece of information at increasingly longer periods of time. It exploits the 
+spacing effect of memory to improve efficiency in rote memorisation by attempting to 
+have a student review a piece of
+information \textit{just before} it is forgotten. 
+
+Various studies have found that spacing out repetitions over time is
+more effective than massed repetition or studying in a short space of time \cite{distributed_massed_2005}.
+The type of spacing however is a more controversial topic, with some studies suggesting
+fixed intervals are better \cite{fixed_intervals_2005}, while others suggest expanding intervals
+are more effective \cite{effects_of_spacing_1963}. Regardless of this, spaced
+repetition algorithms usually use expanding intervals in order to make study
+time more efficient.
+
+Spaced repetition can be used for memorising
+nearly anything - equations, vocabulary, numbers, phrases, diagrams. A typical application
+is using standard flash-cards, with a prompt to recall on one side and the correct answer on
+the other. Depending on the how well the student recalls and the history of the flash-card, the
+flash-card is rescheduled after each review. 
+
+\begin{figure}[h!]
+\includegraphics[width=11cm]{img/wired_forgetcurve.jpg}
+\caption{Projected Forgetting Curves with Spaced Repetitions \cite{wolf_want_2008}}
+\label{fig_projectedforgettingcurve}
+\end{figure}
+
+Figure \ref{fig_projectedforgettingcurve} shows an example of spaced repetition in
+action. After initial memorisation, a student might revise the content when there
+is a 90\% chance of recalling the content correctly -- which might be the following day.
+After this first revision, the student is likely to remember the content for a longer
+period of time and on day 10 will again have a 90\% chance of recall. This continues
+for each subsquent revision, with each revision solidifying the content in the student's
+mind and the chance of remembering diminishing at a slower rate over time.
+
+As an added advantage, by prompting the user to recall and then to rate their answer -- the user
+is in a sense being tested and thus actively engaging rather than passively `studying'.
+Testing and the associated active retrieval has been shown to improve retention
+significantly over passive study \cite{effects_of_recall_tests_1969},
+\cite{retrieval_for_learning_2008}, \cite{power_of_testing_memory_2006}.
+
+\begin{table}[h!]
+\caption{Example of reviews for a single flash-card in spaced repetition}
+\label{tbl_spacedrepetitionexample}
+\begin{tabular}{|r|c|l|}
+\hline
+Review Date & Recall & New Interval \\
+\hline
+1 Jan & Incorrect & 0 days \\
+1 Jan & Correct, difficult & 1 day \\
+2 Jan & Correct, difficult & 2 days \\
+4 Jan & Correct, easy & 5 days \\
+9 Jan & Correct, easy & 12 days \\
+21 Jan & Incorrect & 0 days \\
+21 Jan & Correct, easy & 1 day \\
+22 Jan & Correct, easy & 3 days \\
+\ldots & \ldots & \ldots \\
+\hline
+\end{tabular}
+\end{table}
+
+Spaced repetition software automates this process by storing relevant data alongside each
+flash-card in a database. The type of data stored depends upon the spaced repetition algorithm
+used. Most algorithms store the current interval (in days) which represents the spacing,
+an estimate of how long a student should be able to remember the word between reviews.
+On each successful review, the interval is increased and the card rescheduled based on
+the interval. Of course this is not an exact science, sometimes the student will not be able to recall,
+and some algorithms take this into account and adjust based on the difficulty of the
+particular word. An example of how a card might be rescheduled
+is shown in table \ref{tbl_spacedrepetitionexample}.
+
+Unfortunately very little publicly available research on spaced repetition
+algorithms has been carried out. Dempster
+postulates\cite{dempster_spacing_effect_1988} that it has simply not caught
+on since it has not been known for very long, has not yet been demonstrated
+satisfactorily with %TODO finish paragraph
+
+\subsubsection*{SuperMemo 2 Algorithm (SM2)}
+As one of the first spaced repetition applications available for personal computers, %TODO Ref
+SuperMemo and its algorithms paved the way for other applications such as Mnemosyne and
+Anki (see section \ref{background_similarprojects}). Developed by Piotr
+Wozniack\cite{wozniak_optimization_1990}, the \textit{SuperMemo 2} algorithm was an
+enhancement over the \textit{SuperMemo} algorithm primarily in that it would differentiate 
+between items based on their difficulty to memorise\cite{wozniak_optimization_1990}.
+
+The SuperMemo algorithm reschedules flash-cards a number of days into the future, known
+as the \textit{interval}, where the interval is defined as the function $I(n)$ with $n$ the
+current repetition number. For the first repetition, the interval is simply one day.
+For the second repetition, the interval increases to six days. 
 \begin{equation}
 I(1) := 1
 \end{equation}
@@ -14,19 +155,31 @@ I(1) := 1
 I(2) := 6
 \end{equation}
 
+For all $n \geq 3$, equation \ref{eqn_sm2_3} applies.
+
 \begin{equation}
+\label{eqn_sm2_3}
 I(n) := I(n-1) \times EF
 \end{equation}
 
+$EF$ is defined as the \textit{easiness factor} of the flash-card. The easiness factor
+of the flash-card is adjusted on each review based on the answer given by the user with
+equation \ref{eqn_sm2_4}
+
 \begin{equation}
+\label{eqn_sm2_4}
 EF := EF + (0.1 - (5 - q) \times (0.08 + (5 - q) * 0.02))
 \end{equation}
 
-\subsection{Similar Projects} \label{background_similarprojects}
-\subsubsection*{Memrise}
+The easiness factor is bounded by the values $1.1 \leq EF \leq 2.5$ where 1.1 indicates
+the most difficult flash-cards and 2.5 indicates the easiest. Before a user begins studying a
+flash-card for the very first time, the associated easiness factor is set to 2.5.
+
+\section{Similar Projects} \label{background_similarprojects}
+\subsection*{Memrise}
 Memrise is a private company which produces web-based flashcard software.
 
-\subsubsection*{The Mnemosyne Project}
+\subsection*{The Mnemosyne Project}
 Mnemosyne is open source spaced repetition software collecting anonymised data from its many users in order
 to evaluate the effectiveness of the implemented spaced repetition algorithm \cite{peter_bienstman_principles_2012}.
 Mnemosyne uses a modified version of the Supermemo algorithm.
@@ -37,5 +190,9 @@ The project does not appear to have produced any papers or research publications
 \caption{Screenshot of Mnemosyne in use}
 \end{figure}
 
-\subsubsection*{Anki}
+\subsection*{Anki}
+Anki is one of the most full-featured open-source spaced repetition applications available.
+Anki allows users to attach images, sounds, and even embed \LaTeX \ equations in flash-cards. 
 
+The developer of Anki decided against SuperMemo 3 and later algorithms instead opting for
+the SuperMemo 2 algorithm because of the complexity that the SM3+ algorithms introduce\cite{anki_faq}.

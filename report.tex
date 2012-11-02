@@ -4,9 +4,10 @@
 \g@addto@macro\@floatboxreset\centering
 \makeatother
 
-\documentclass[a4paper]{article}
-\usepackage[margin=3cm]{geometry}
+\documentclass[12pt,a4paper,twoside,openright]{book}
+\usepackage[margin=2cm]{geometry}
 \usepackage[pdftex]{graphicx}
+\usepackage{amsmath}
 \usepackage{float}
 \usepackage{hyperref}
 \usepackage[parfill]{parskip}
@@ -20,27 +21,23 @@
 \author{Jordan West}
 
 \begin{document}
-
+\frontmatter
 % \maketitle
 \input{titlepage.tex}
 
-\tableofcontents
-\newpage
+\cleardoublepage
 
-\input{introduction.tex}
-\input{background.tex}
-\input{goals.tex}
-\input{method.tex}
-\input{results.tex}
-\input{discussion.tex}
+\input{declaration.tex}
 
-\section{Acknowledgments}
+\chapter*{Acknowledgments}
 This thesis would not have been possible without the support of my
 supervisor Dr. Mark Schulz whose input and guidance
 has been invaluable for the project.
 
 I would like to thank Dr Yuriko Nagata for her assistance with this and for allowing
-me to introduce the software to her students.
+me to introduce the software to her students. I would very much like to thank the students
+of JAPN1023 who participated in the project, with whom none of this would have been possible.
+I hope also that the students found some value in using the software.
 
 Dr Michael Harrington of the School of Languages and Comparative Cultural Studies
 for his advice with the online learning software, particularly the suggestion
@@ -53,24 +50,39 @@ Last but not least I want to thank my friends for their encouragement and
 for putting up with me throughout the project, and Mum and Dad for supporting me
 % TODO Finish Acknowledgements
 
+\chapter*{Abstract}
+\newpage
+
+\tableofcontents
+
+\mainmatter
+\input{introduction.tex}
+\input{background.tex}
+\input{goals.tex}
+\input{method.tex}
+\input{results.tex}
+\input{discussion.tex}
+
+
+
 %\bibliographystyle{plain}
 %\bibliography{thesis}
 \printbibliography
 
 \appendix
-\section{Participant Information Sheet}
+\chapter{Participant Information Sheet}
 \label{appendix_participant_info_sheet}
-\fbox{\includegraphics[page=1,width=15cm]{appendix/participant_info_sheet.pdf}}
-\section{Participant Consent Form}
+\fbox{\includegraphics[page=1,width=17cm]{appendix/participant_info_sheet.pdf}}
+\chapter{Participant Consent Form}
 \label{appendix_participant_consent_form}
-\fbox{\includegraphics[page=1,width=15cm]{appendix/participant_consent_form.pdf}}
-\section{Original Wireframes}
+\fbox{\includegraphics[page=1,width=17cm]{appendix/participant_consent_form.pdf}}
+\chapter{Original Wireframes}
 \label{appendix_wireframes}
-\fbox{\includegraphics[page=1,width=15cm]{appendix/wireframes.pdf}}\newpage
-\fbox{\includegraphics[page=2,width=15cm]{appendix/wireframes.pdf}}
-\fbox{\includegraphics[page=3,width=15cm]{appendix/wireframes.pdf}}
-\fbox{\includegraphics[page=4,width=15cm]{appendix/wireframes.pdf}}
-\fbox{\includegraphics[page=5,width=15cm]{appendix/wireframes.pdf}}
-\fbox{\includegraphics[page=6,width=15cm]{appendix/wireframes.pdf}}
+\fbox{\includegraphics[page=1,width=17cm]{appendix/wireframes.pdf}}\newpage
+\fbox{\includegraphics[page=2,width=17cm]{appendix/wireframes.pdf}}\newpage
+\fbox{\includegraphics[page=3,width=17cm]{appendix/wireframes.pdf}}\newpage
+\fbox{\includegraphics[page=4,width=17cm]{appendix/wireframes.pdf}}\newpage
+\fbox{\includegraphics[page=5,width=17cm]{appendix/wireframes.pdf}}\newpage
+\fbox{\includegraphics[page=6,width=17cm]{appendix/wireframes.pdf}}
 
 \end{document}
