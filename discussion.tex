@@ -10,25 +10,56 @@ codes or difficulties in registering were made.
 
 Usage after registration was equally low. A majority of users logged in only once or twice
 after registration and stopped usage after this. A few users shown in table \ref{tbl_topusers}
-made up the majority of review data and thus the data was likely skewed towards these users
-particularly after removing `new' reviews.
+made up the majority of review data and thus the data was likely skewed towards these users,
+particularly after removing `new' reviews. Unfortunately only a single participant studied all
+240 vocabulary items in the list.
 
-Quizzes were held in weeks 5, 8, and 11 which appear to have had little effect on the
-usage of the software
+The large spike in the first few days in figure \ref{fig_usage_sinceregistering} suggests
+that students tried the software out and did several reviews immediately after registering, but were
+unmotivated to return and complete reviews in subsequent days and weeks.
+
+Interestingly, although one might expect study frequency to increase in the lead up to
+assessment, assessed class quizzes were held in weeks 5, 8, and 11 and appear to have had little effect on the
+usage of the software. The number of reviews is however not necessarily a good indicator of student
+motivation to study -- it could simply be the case that not as many reviews were due during those weeks.
+
+Qualitative feedback from students on their usage was not gathered, however the
+course coordinator mentioned that students felt they had no time to use the software
+as they were too busy with other assessed work.
+
 
 \subsection{Forgetting Curves}
-The forgetting curves appear to bear some resemblance in shape to those hypothesised
+The forgetting curves appear to bare some resemblance in shape to those hypothesised
 by Ebbinghaus, however too little data is available to support it with any certainty.
 It appears that chance of recall for shorter periods of time does increase with each
 spaced review.
 
-\subsection{Prediction of Recall}
-* Can say with 70\% certainty that user will recall the word at any point in time
-by feeding in the words
+The curve for recall after the first review is the most promising, showing a very
+sharp decline of recall probability in the first days after the review and flattening
+beyond that. The chance of recall after the second and third reviews show a much 
+higher probability of recall in the first few days as expected, however data
+beyond this is unavailable and as a result the curve fit appears linear.
 
-Overall the results show that there is some possibility of correctly predicting whether
-a student will recall a word given the spaced repetition parameters and a history of
-reviewing that word. With an approximately 70\% chance
+With a larger number of reviews over a longer period of time than was achieved in this project,
+it should be possible to construct much more accurate forgetting curves. Additionally for
+students using the software daily, forgetting curves could be constructed per user and
+compared amongst different students. With a larger review dataset, it would also be
+possible to compare forgetting curves across different words - some words might be more
+quickly forgotten while others might remain for longer, for example if students were
+taught a mnemonic to aid retention \cite{mnemonics_1992}.
+
+The Mnemosyne project is one such possible source of this extra data, as it has
+been collecting data from its users since 2006 \cite{peter_bienstman_principles_2012}.
+
+
+
+\subsection{Prediction of Recall}
+Overall the results indicate that there is some possibility of
+correctly predicting whether
+a student will recall the meaning and pronunciation of a word given the spaced
+repetition parameters and a history of
+student reviews for that word. With a ~70\% accuracy, the results are
+promising and warrant further investigation.
 
 The confusion matrix in figure \ref{tbl_confusionmatrix_ura} shows that predictions
 for the user's answer are generally close to the actual answer selected, however
@@ -41,7 +72,7 @@ appears that the limitations are with the data rather than with the machine lear
 techniques and parameters selected. With these results it seems that there is a
 reasonable correlation
 between the variables stored by the spaced repetition algorithm and the chance of
-recalling the meaning and pronounciation of a foreign word, however they are limited.
+recalling the meaning and pronunciation of a foreign word, however they are limited.
 
 The addition of other variables into the review data could improve correlation,
 however where these variables are sourced is a complicated matter. Additional variables
@@ -51,6 +82,9 @@ with other similar looking words, and the word frequency in the target language.
 
 One drawback of this study is the subjective rating of recall. Although the ratings
 were defined on the screen where students review, students could select any rating
+and choices of rating may have differed between participants. Since the prediction
+algorithms were run across all students, those students who used the software more
+often likely skewed the data. 
 
 \section{Changes to Original Scope}
 A number of changes were made over the course of the project. Originally it was
@@ -65,7 +99,7 @@ As shown in the original wireframes in appendix \ref{appendix_wireframes}, durin
 users would be asked to enter their own answer before the correct answer was revealed
 to them. They would then rate their own answer against the correct answer. This was
 to be used for gathering possible answer variations for a particular word
-which could then be used to automatically grade a quiz. However since the quiz
+that could then be used to automatically grade a quiz. However since the quiz
 component was removed, this was no longer required. Additionally it would introduce
 too many variables -- if incorrect answers were marked as correct, they would then
 be graded incorrectly in the quizzes. This combined with the fact that manually
@@ -87,5 +121,34 @@ The addition of these variables improved the accuracy across all machine learnin
 algorithms by 2-4\%.
 
 \section{Potential Future Work}
-* Vary the reschedule date slightly from the interval so that data is available for more
-than just the common intervals
+
+Future work should almost certainly gather a larger amount of data over a longer period
+of time. More motivated students who review more frequently would also provide richer
+data with a higher number of repetitions per word.
+
+Additionally various spaced repetition algorithms should be trialled, potentially by
+splitting users into seperate groups. Other algorithms keep track of words
+using different variables which may or may not correlate as well to the chance of
+recall.
+
+Having participants sometimes review cards just before or after they are due would
+also provide more diversity among the overdue times -- reviewing before cards are due
+would result in a negative overdue time and it could be expected that recall is higher
+in these cases. This would also avoid review data grouping around common intervals --
+for example 1 day and 6 days in the case of the SuperMemo 2 algorithm.
+
+
+
+\section{Conclusion}
+
+Overall this project was successful in showing that there is potential for
+modelling memory through recording reviews. The online learning software built was
+reliable and had no major issues, however the usage of the software was lower than
+expected and as a result the data collected was not extensive enough for full analysis.
+
+
+
+
+
+
+

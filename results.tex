@@ -1,11 +1,10 @@
 \chapter{Results}
-
 \section{Usage Statistics}
 
 A total of 28 students registered to use the software and 7,879 total reviews were recorded
 by 3 November 2012.
 
-Students showed interest in the software during the introduction in class, however many
+Students showed interest in the software during the in-class introduction, however many
 students registered and used the software only once. Figure \ref{fig_visits} shows the initial
 interest in the software as a spike in the number of visits toward the beginning of semester.
 This graph tracks all visits including users that have not yet registered.
@@ -30,7 +29,7 @@ a desktop and mobile device.
 The number of reviews completed per user is one of the more important statistics as
 it shows the diversity of `useful' review data. Too many first reviews are useless as
 they contain no useful data on which to later predict an answer.
-Figure \ref{fig_usage_reviewcount} shows that eight users only completed new
+Figure \ref{fig_usage_reviewcount} shows that eight users completed only new
 reviews (the 1-20 range) after registering.
 
 For the purposes of the following graphs, users were classified as `active' or `inactive'
@@ -54,9 +53,9 @@ users skewing the data, though an average across all users is also shown with th
 \label{fig_usage_semester}
 \end{figure}
 
-Users tended to complete most reviews on their first few days after registering,
-with the most on the very first day. Figure \ref{fig_usage_sinceregistering} groups
-reviews by the number of days since registering, showing a very fast dropoff in
+Users tended to complete the most reviews on their first day after registering.
+Figure \ref{fig_usage_sinceregistering} groups
+reviews by the number of days since registering, showing a very fast decline in
 number of reviews in the first couple of weeks after registering.
 
 \begin{figure}[h!]
@@ -90,6 +89,32 @@ User ID & Number of logins & Vocabulary studied & Total reviews \\
 \end{tabular}
 \end{table}
 
+\section{User Demographics}
+
+\begin{table}[h!]
+\caption{Gender of registered users}
+\begin{tabular}{|c|c|}
+\hline
+Gender & No. of users \\
+\hline
+Male & 7 \\
+Female & 21 \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+\caption{Native language of registered users}
+\begin{tabular}{|c|c|}
+\hline
+Native language & No. of users \\
+\hline
+English & 21 \\
+Other & 7 \\
+\hline
+\end{tabular}
+\end{table}
+
 \section{Forgetting Curves}
 \subsection*{Generated from Recorded Reviews}
 
@@ -106,7 +131,8 @@ visible.
 
 \begin{figure}[h!]
 \includegraphics[width=14cm]{img/forgettingcurves.jpg}
-\caption{Forgetting curves produced from recorded review data with threshold $n \geq 5$}
+\caption{Forgetting curves produced from recorded review data with various thresholds
+for number of reviews required to generate a data point}
 \label{fig_expforgetcurve}
 \end{figure}
 
@@ -116,9 +142,25 @@ graph in figure \ref{fig_expforgetcurve} for the first
 data point is 1.7\% with the chance of remembering calculated from $n = 774$ review samples.
 In contrast, the data point at fifteen days for the first review was calculated from only 
 $n = 40$ available review samples, and has a standard error of 7.9\%.
-\newpage
-\subsection*{Generated from Machine Learning Algorithms}
-Todo ????
+
+Equation \ref{eqn_forgetcurvefit} shows the curve that was fitted to the data for recall
+after the first review, while equations \ref{eqn_forgetcurvefit2} and \ref{eqn_forgetcurvefit3}
+show the lines fitted to the data for recall after the second and third reviews respectively.
+
+\begin{equation}
+\label{eqn_forgetcurvefit}
+P = \frac{x^{-0.4466}}{0.0154}
+\end{equation}
+
+\begin{equation}
+\label{eqn_forgetcurvefit2}
+P = -2.46x + 93.1
+\end{equation}
+
+\begin{equation}
+\label{eqn_forgetcurvefit3}
+P = -0.72x + 94.4
+\end{equation}
 
 \section{Prediction of Recall}
 

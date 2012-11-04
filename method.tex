@@ -1,7 +1,41 @@
 \chapter{Methods and Materials}
 \label{methods}
 \input{goals.tex}
-\section{Experimental Design}
+\section{Experimental Design and Data Collection}
+In order to gather data, the online learning environment records each and every review
+by a participant. A review is defined as a student recalling a Japanese vocabulary item on
+an electronic flash-card and the subsequent rating of their recall.
+
+The `front' of the flash-cards will prompt the student with an expression, or
+the Japanese written form of a Japanese word. On the `rear' of the flash-card the pronunciation
+is written in Hiragana -- the Japanese alphabet -- along with the English meaning of the word.
+
+A student will see the front of the flash-card and attempt to recall both the pronunciation
+and the meaning of the word. The user then chooses to show the answer and rates their own answer on
+a scale of 0-5 which is then used to reschedule the card for a future date. Another card is
+then displayed to the user and the process repeats.
+
+If a user selects a response of 0-2 indicating their failure to recall the pronunciation
+and meaning of the word, the word is queued for review at the end.
+
+The review process continues until the student has studied all cards due for review that day, all
+failed flash-cards, and 20 new flash-cards or until the student logs out. A new card is defined
+as a card that a student has never studied using the online learning environment. Assuming that
+the student
+studies the maximum 20 new cards each day they review, a student must use the software for 12 days
+and complete all reviews in order to have studied each word in the complete vocabulary list at
+least once. After this point,
+all flash-cards shown are reviews of already studied cards. Since new cards contain no
+information about past study,
+these reviews are impossible to use in predicting a users recall. Therefore it is important
+that many reviews are captured of previously studied cards.
+
+Students have the freedom to use the software at any time. They are encouraged to use it every day in order
+to make sure that flash-cards are reviewed on the day that they are due (increasing the chance
+that they will be recalled correctly) however for this experiment reviews of overdue cards is not
+necessarily a problem as the overdue time is taken into account as an additional variable when
+predicting recall, as well as providing more diverse data when generating forgetting curves.
+
 \section{Participants}
 \subsection{Participant Recruitment}
 Participants were students of the introductory Japanese course JAPN1023. The author
@@ -21,7 +55,7 @@ and approval by a `Gatekeeper' who provides access to participants - in this cas
 
 Data was to be stored anonymously and securely. In order to ensure participation was anonymous,
 cards containing unique codes were to be handed out randomly to participants to allow them to
-register online. Student review data was tied to a unique number in the database which could
+register online. Student review data was tied to a unique number in the database that could
 not be traced back to individual students. Email addresses were collected from students in order
 to allow them to log in and to reset their password if required, however exported review data was
 stored only against a unique number in the database which could not be traced back to individual
@@ -30,39 +64,52 @@ students. Participants were also given an information sheet (See Appendix
 \ref{appendix_participant_consent_form}) to sign and return before receiving a registration card.
 
 \section{Online Learning Software Design}
+The online learning environment for students, named `Membit' was built as the main interface
+for data collection. This section outlines the design and construction of the software.
 \label{methods_softwaredesign}
+
 \subsection{Requirements}
 
 A number of requirements were set out for the online learning software. These are listed below along
 with how these requirements are achieved.
 
-\paragraph{Should be easily accessible to students.} Removing barriers to use will
-encourage students to use the software more often. %TODO Reference
+\paragraph{Should be easily accessible to students.} Removing barriers to usage will
+encourage students to use the software more often.
 
 By providing access to the learning environment online via a web-based interface, students can
 access the software anywhere - including from university computers without requiring installation
-of any software.
+of any software. The application is simply accessed with a web-browser by visiting
+\url{http://membit.herokuapp.com/}.
 
-\paragraph{Should be secure and anonymous.} Both for peace of mind for students, and to fulfill
-ethical requirements data must be collected anonymously and securely. Students may be more
-reluctant to use the software with the knowledge that their individual progress is being tracked. %TODO Ref
+\paragraph{Should be secure and anonymous.} For peace of mind for students, and to meet
+ethical standards data must be collected anonymously and securely. Students may be more
+reluctant to use the software with the knowledge that their individual progress is being tracked.
 
-This is achieved by allocating each student a unique code with which the log in. Students are then
+This is achieved by allocating each student a unique code with which to register. Students are then
 recorded in the database using a newly assigned number which is unknown to the users. Downloaded review
 data should only refer to users with this number, meaning that even if the registration code is known,
 a user cannot be identified from downloaded review data. Furthermore, all data should be stored on a secure
 password protected server and all usage of the system via a secure connection to the server.
 
-\paragraph{Should be easy to update and/or fix bugs.} Since the timespan is 
+\paragraph{Should be easy to update and/or fix bugs.} It is important that bugs can be fixed quickly
+and efficiently, as downtime could affect results if users are prevented from performing reviews
+when they are due. Building the application as a web application with a fast deployment pipeline
+will ensure that bugs can be fixed and patches published to the live application quickly with users
+not required to perform any software updates. 
 
 \paragraph{Data should be captured and stored immediately.} Since the project period is short,
 users cannot be relied upon to submit their data manually in time for analysis. Therefore reviews
 should be recorded immediately.
 
-\paragraph{Only nominated students should be able to access the system}
+\paragraph{Only nominated students should be able to access the system} To ensure some uniformity
+of the student level of Japanese knowledge, only students in JAPN1023 were allowed to use the
+system. Student who already have a strong knowledge of the Japanese language could potentially
+skew results since they may already know a majority of the vocabulary within the software.
+By requiring users to register with a one-use-only registration code, students cannot share
+their registration code with somebody outside of the class.
 
 \subsection{Tools}
-This section outlines the software tools that will be used for the project and reasoning for
+This section outlines the software tools that were used for the project and reasoning for
 choosing these tools.
 \paragraph{Git and Github}
 (\url{http://git-scm.com/}),
@@ -82,15 +129,15 @@ at any time by others.
 
 Git was selected for this project because of its portability (moving repositories
 between servers is trivial). Github was chosen as it is free, encourages collaboration and is also the tool of choice for the 
-Centre of Educational Innovation in Technology \cite{zornig_ceit_2012} under which this project was completed. 
+Centre of Educational Innovation in Technology \cite{zornig_ceit_2012}, under which this project was completed. 
 
 \paragraph{Ruby on Rails}
 (\url{http://www.rubyonrails.org/})
 
 Ruby on Rails (aka Rails) is a popular open source framework for developing web applications\cite{bachle_ruby_2007}.
-Rails was originally extracted from a commercial application (Basecamp by 37Signals) to create a generic
+Rails was originally extracted from a commercial application (Basecamp by 37Signals) to create a generic web
 application framework \cite{carneiro_jr._beginning_2010} written in the Ruby language. Rails is designed for
-rapid development and provides many guidelines which the developer is recommended to follow in order to speed up
+rapid development and provides many guidelines that the developer is recommended to follow in order to speed up
 development. Additionally, as an open source project Rails has gained many developers who have contributed back
 to the community by sharing reusable components (known as Ruby Gems) with the community. This means many pieces of
 functionality can be used in a project without rewriting, speeding up the development process. Gems used in this
@@ -100,8 +147,6 @@ project include:
 \item[CanCan] User authorisation - Allow and deny access to users based on their role (participant, administrator, teacher)
 \item[Highcharts-Rails] Adds the Highcharts library to the application (See section below)
 \end{description}
-
-% TODO Complete Rails section
 
 \paragraph{Heroku}
 (\url{http://www.heroku.com/})
@@ -114,8 +159,6 @@ than a minute.
 
 Heroku was chosen over a private server for this project since it was necessary to be able to push updates
 to the live application quickly in order to respond to bugs and to reduce time spent finding faults in the server.
-
-% TODO Complete Heroku section
 
 \paragraph{Backbone.JS}
 (\url{http://www.backbonejs.org/})
@@ -130,10 +173,9 @@ author's familiarity with the library.
 \paragraph{Highcharts}
 (\url{http://www.highcharts.com/})
 
-Highcharts is a commercial Javascript framework which provides graphing capabilities to web sites. Highcharts
+Highcharts is a commercial Javascript framework that provides graphing capabilities to web sites. Highcharts
 allows free usage by non-commercial projects. Highcharts was selected for graphing usage statistics
 on the website because of the features it provides in addition to recommendations on websites such as Stack Overflow \cite{stackoverflow_highcharts_2012}.
-% TODO Complete Highcharts section
 
 \paragraph{Twitter Bootstrap}
 (\url{http://twitter.github.com/bootstrap})
@@ -161,7 +203,7 @@ R is an open source programming language designed primarily for statistical comp
 Many packages are available for R which provide functionality including various
 machine learning algorithms.
 
-R was selected since it is open source and therefore code written is possible for others to recreate
+R was selected since it is open source and therefore it is possible for others to recreate
 the experiment without purchasing expensive software such as MATLAB. Additionally, the libraries
 available in R (such as e1071, the Support Vector Machine library) generally provide more customisability
 over those available in MATLAB as standard.
@@ -185,27 +227,29 @@ their response}
 \end{figure}
 
 Figures \ref{fig_review_front} and \ref{fig_review_back} show the `front' and `back' of the
-flash-cards respectively. The user is prompted to recall the pronounciation and English
-meaning of the word on the front, then after choosing to reveal the answer can compare
-their answer with that written on the back.
+flash-cards respectively. The user is prompted to recall the pronunciation and English
+meaning of the word on the front. The answer can be revealed either by pressing
+the `Show Answer' button or pressing the `F' key on the keyboard, allowing the user to compare
+their recalled answer with the correct answer.
 
 Finally the user rates their recall on the 0-5 scale using either the buttons on screen or
-the keyboard, and the next card is then displayed.
+the keyboard, and the next card is displayed for the process to repeat.
 
 \subsubsection{Withdrawal of Participation}
-A condition of ethical approval, participants are able to withdraw
+To meet ethical standards, participants are able to withdraw
 from participation from within the software at any time
 using the `Withdraw Participation' function which immediately deletes all associated
 information.
 
 \subsubsection{Password Reset and Change}
 Students are able to reset their password by entering their email address into a
-password reset page. An email is sent containing a new random password which they
-can use to log in and then change their password.
+password reset page. An email is sent to the account associated with
+the email address containing a new random password which
+can be used to log in. A new password can be set after logging in.
  
 
 \subsubsection{Administration}
-An secured administration section was built to facilitate the operation of system, including
+A secured administration section was built to facilitate the operation of system, including
 features such as:
 \begin{itemize}
   \item Generating registration codes
@@ -215,10 +259,10 @@ features such as:
 
 \subsubsection{Registration Codes}
 An interface for the administrator allows generation of registration codes. Registration
-codes are strings of random numbers and letters which can be used to create an account.
+codes are strings of random numbers and letters that can be used to create an account.
 Each code can be used only once, and is associated with a role in the system which carries
 over to the account created with the code. For example, the administrator may wish to
-create 50 participant codes, 5 tester codes and 1 teacher code which can then be given
+create 50 participant codes, 5 tester codes and 1 teacher code that can be given
 to the respective users. This ensures a hard limit on the number of each type of user
 that can register.
 
@@ -242,30 +286,40 @@ time in writing out 100 individual cards by hand.
 \subsubsection{Teacher Dashboard}
 A common feature in online learning environments is a dashboard for teachers to track
 student usage. A basic dashboard was designed to visualise usage of the system
-over time and to show information on the vocabulary list - which words were difficult
-and which were not so difficult for students to remember.
+over time and to show information about the vocabulary -- which words were difficult
+and which were not so difficult for students to remember based on the average easiness
+factors for all students.
 
 \subsection{Vocabulary List}
 The vocabulary selected was the vocabulary for the JAPN1023 course in which the participants
-were enrolled. It is hoped that since the vocabulary is part of the course content, students
-will be encouraged to use the software to learn the vocabulary. A total of 240 words were
+were enrolled. It was hoped that since the vocabulary is part of the course content, students
+would be encouraged to use the software in order to help them learn the vocabulary. A total of 240 words were
 entered into the database. 
 
 The vocabulary was entered into a spreadsheet and run by the course coordinator for verification.
 The vocabulary list was then exported to a .csv file and text manipulation software
-was used to convert the list to Ruby code which inserts records directly into the
+used to convert the list to Ruby code which inserts records directly into the
 database. A .csv import mechanism was considered to replace this process, however
 since the import is a one-time process this was decided against.  
 
 \subsection{Spaced Repetition Algorithm Implementation}
-The spaced repetition algorithm was implemented in Ruby as part of the application.
+The SuperMemo 2 algorithm was selected in favour of newer SuperMemo algorithms because
+of the widespread use of this algorithm over newer algorithms. Both Mnemosyne and Anki developers
+chose the SuperMemo 2 algorithm due to the complexity of the SuperMemo 3+ algorithms -- although
+the Mnemosyne developer eventually switched to the SuperMemo 11 algorithm
+\cite{peter_bienstman_principles_2012}, \cite{anki_faq}. Additionally, the SuperMemo 3
+algorithm was decided against as the flash-cards are not considered independently -- a review
+of one card can affect the values for similar cards \cite{anki_faq}. For simplicity sake in this project, all
+flash-cards are considered independent from each other.
+
+The SuperMemo 2 algorithm was implemented in Ruby as part of the application.
 Data is stored in an SQL database. The variables required for the spaced repetition
 algorithm are stored in a `UserWords' table which contains a record for each individual
 user and vocabulary item. This means each time a new user is created, 240 records are added to the
 `UserWords' table to keep track of each word. Upon review, the variables are pulled from this
 table, recorded in
 the reviews table along with the user's response 
-and then a new interval and easiness factor calculated based on the previous
+and a new interval and easiness factor calculated based on the previous
 values and the user response.
 
 In order to provide more review data at smaller intervals, the interval for the second 
@@ -284,14 +338,17 @@ The easiness factor however is not reset on failing an item and is calculated as
 The system selects cards for the user to review in the following order:
 \begin{enumerate}
   \item Cards due for review
-  \item Failed cards
   \item New cards
+  \item Failed cards
 \end{enumerate}
+
+Since failed cards are effectively due immediately, they are cycled so that the failed
+card with the oldest previous review is displayed first.
 
 \subsection{Data storage, formatting and output}
 
 The application data is stored in an SQL database accessed with the Ruby on Rails
-framework. The following tables contain the major functionality:
+framework. The following tables contain the majority of useful data:
 
 \begin{description}
 \item[Users] A listing of all registered users, and a secure one-way hash of their password information
@@ -299,7 +356,7 @@ to provide login functionality.
 \item[Words] A listing of all 240 vocabulary items and their associated expression, meaning and readings.
 \item[UserWords] Records spaced repetition parameters for a particular user and word association.
 Each user has their own record of progress with each individual word.
-\item[Reviews] Records of every review completed with the software. A review captures the current state
+\item[Reviews] Records of every review completed with the software. A review captures the current state of
 the associated UserWord record when a review is completed, and the user's selected answer for that review.
 The review table keeps track of a user's role so that teacher, administrator and tester review data
 can be removed when the data is exported leaving only participant review data.
@@ -400,16 +457,10 @@ $\sqrt{\frac{0.333(1 - 0.333)}{3}} = 0.272$
 We cannot say with any accuracy from this data that the probability of remembering a word
 given these inputs is 0.333. On the other hand, with a sampling of thousands of reviews for a
 given repetition number and actual interval the error is reduced and a probability can
-be considered more accurate. %TODO Probability Ref
+be considered more accurate.
 
-This issue is one of gathering enough data, and so various thresholds for minimum number of reviews
-to give an adequate probability will be arbitrarily selected based on the amount of data available.
-
-Forgetting curves can also be generated from running data through the machine learning
-algorithms trained upon the data. By entering a full range of possible variable values through
-the trained machine learning algorithms, we can generate a much larger dataset than original
-to work with. This will also be explored and compared with the forgetting curves generated from
-the true data.
+This issue is one of gathering enough data, and so various thresholds for the minimum number of reviews ($n$)
+ were arbitrarily selected based on the amount of data available.
 
 Due to the limited amount of data expected, forgetting curves will be constructed on the basis of
 the entire set of users and not for individual users.
@@ -419,16 +470,16 @@ the entire set of users and not for individual users.
 Prediction of recall is carried out using the R programming language and packages
 which implement machine learning algorithms. Packages used include:
 \begin{description}
-\item[e1071] An implementation of libsvm, a common Support Vector Machine library
+\item[e1071] An implementation of libsvm, a common Support Vector Machine library.
 \item[nnet] A neural network implementation supports multilayer perceptrons with 
 logistic and linear outputs.
 \end{description}
 
 The review data is downloaded as .csv from the administration section of the online
 learning environment. An R script loads the .csv file into the environment, strips
-out the irrelevant columns in the data, trains and validates the selected 
+out the irrelevant columns in the data, and trains and validates the selected 
 machine learning algorithms on the data. Table \ref{tbl_inputoutputs} shows
-the variables that are kept from the review data and their usage for training
+the variables from the review data that are used for the training
 and validation. Note that the output `Correct' is calculated based on the `User
 Rated Answer' and is simply a convenience to refer to whether or
 not the user correctly recalled a word without taking into account the subjective
@@ -439,6 +490,10 @@ either stored or can be calculated from values stored alongside each user-word i
 the database by the spaced repetition algorithm. This means that given a well
 trained algorithm and a set of user-words for a user, it should be possible to
 calculate which words the user will correctly recall at any given point in time.
+
+Multilayer perceptrons and support vector machines were selected for their
+handling of nonlinear regression. In the case of support vector machines, both
+a linear and radial basis kernel function was selected for comparison.
 
 \begin{table}[h!]
 \caption{Inputs and Outputs to Machine Learning Algorithms}

@@ -1,21 +1,14 @@
 \chapter{Literature Review}
 \label{background}
-\section{Definitions}
-This section outlines some terms used for convenience in this report.
-\begin{description}
-\item[Flash-card] A method of memorising facts where a physical card is written with a question on one side and the answer on the other.
-\item[Review] A single review of a flash-card. The user is shown a vocabulary item in Japanese and must recall the meaning and pronounciation of the word. 
-\item[Fact] A single vocabulary item with associated meaning and pronounciation.
-\end{description}
 \section{Machine Learning} \label{background_machinelearning}
 When developing a computer algorithm which takes some data as an input and returns an output,
 we will usually look at the underlying mechanism as to how we come to that conclusion. However it is not
-always possible to know what is the underlying mechanism which produces an output
+always possible to know what is the underlying mechanism that produces an output
 given certain inputs \cite{intro_to_machine_learning_2010}.
 
 What makes machine learning algorithms unique is that they in a sense `learn'; given a large
 enough set of observed inputs and outputs, a machine learning algorithm builds a model which infers
-certain outputs given new inputs. We do not always need to know the underlying mechanism which
+certain outputs given new inputs. We do not always need to know the underlying mechanism that
 translates a set of inputs to a set of outputs, as long as the inputs and outputs are related and
 a large enough data set is used.
 
@@ -23,7 +16,7 @@ What is `large enough'? This of course depends upon the problem domain, the numb
 and how the inputs are related to the outputs. 
 
 Various types of machine learning algorithms exist, however this report focuses on classification
-algorithms -- that is algorithms which return an output as a `class' rather than as a continuous variables
+algorithms -- that is algorithms which return an output as a `class' rather than a continuous variable
 (regression). Additionally, we will only be looking at supervised learning since training data will contain
 outputs alongside inputs.
 
@@ -71,7 +64,7 @@ y = w_1x_1 + w_2x_2 + w_3x_3 =  \sum w_nx_n
 However, such networks are limited in that they can only solve linear
 problems \cite{intro_to_machine_learning_2010}. Multilayer
 perceptrons take this model a step further and add `hidden layers' of units between the
-input and output as shown in figure \ref{fig_neuralnet2} which allows non-linear regression.
+input and output as shown in figure \ref{fig_neuralnet2}, which allows nonlinear regression.
 
 \begin{figure}[h!]
 \digraph{neuralnet2}{
@@ -118,14 +111,14 @@ continues to increase \cite{intro_to_machine_learning_2010}.
 
 Often a single hidden layer is used due to the increased complexity introduced by adding
 several hidden layers. Adjusting the number of units in a hidden layer can affect the performance
-of the network, so a common approach the finding the best performance is to begin with a large or
+of the network, so a common approach to finding the best performance is to begin with a large or
 small number of units and gradually decrease or increase the number of units \cite{intro_to_machine_learning_2010}.
 
 \subsection{Support Vector Machines}
 
 A support vector machine (SVM) -- also known as a kernel machine -- is a method for
 linear classification and regression. SVMs operate in an $n$-dimensional space, where
-$n$ is the number of input variables. By using a hyperplane in this space which separates
+$n$ is the number of input variables. By using a hyperplane in this space to separate
 instances based on their class, it is possible to place new instances in the space
 in order to predict their class.
 
@@ -175,7 +168,7 @@ information \textit{just before} it is forgotten.
 
 Various studies have found that spacing out repetitions over time is
 more effective than massed repetition or studying in a short space of time \cite{distributed_massed_2005}.
-The type of spacing however is a more controversial topic, with some studies suggesting
+The type of spacing is however a more controversial topic, with some studies suggesting
 fixed intervals are better \cite{fixed_intervals_2005}, while others suggest expanding intervals
 are more effective \cite{effects_of_spacing_1963}. Regardless of this, spaced
 repetition algorithms usually use expanding intervals in order to make study
@@ -229,7 +222,7 @@ Review Date & Recall & New Interval \\
 
 Spaced repetition software automates this process by storing relevant data alongside each
 flash-card in a database. The type of data stored depends upon the spaced repetition algorithm
-used. Most algorithms store the current interval (in days) which represents the spacing,
+used. Most algorithms store the current interval (in days) which represents the spacing, or
 an estimate of how long a student should be able to remember the word between reviews.
 On each successful review, the interval is increased and the card rescheduled based on
 the interval. Of course this is not an exact science, sometimes the student will not be able to recall,
@@ -237,18 +230,18 @@ and some algorithms take this into account and adjust based on the difficulty of
 particular word. An example of how a card might be rescheduled
 is shown in table \ref{tbl_spacedrepetitionexample}.
 
-Unfortunately little publicly available research on spaced repetition
+Unfortunately, little publicly available research on spaced repetition
 algorithms has been carried out. Dempster (1988)
 postulated several potential reasons that spaced repetition itself has failed 
-to catch on in education which include a lack of demonstration in school-like activities, the
+to catch on in education, which include a lack of demonstration in school-like activities, the
 relative recency of its development, and a lack of understanding of the effect
 \cite{dempster_spacing_effect_1988}.
  
 Nonetheless, spaced repetition is a valuable tool in this project because of its
 inherent tracking of several parameters for each vocabulary item for each student.
 
-\subsubsection*{SuperMemo 2 Algorithm (SM2)}
-As one of the first spaced repetition applications available for personal computers, %TODO Ref
+\subsection*{SuperMemo 2 Algorithm (SM2)}
+As one of the first spaced repetition applications available for personal computers,
 SuperMemo and its algorithms paved the way for other applications such as Mnemosyne and
 Anki (see section \ref{background_similarprojects}). Developed by Piotr
 Wozniack\cite{wozniak_optimization_1990}, the \textit{SuperMemo 2} algorithm was an
@@ -283,18 +276,40 @@ equation \ref{eqn_sm2_4}
 EF := EF + (0.1 - (5 - q) \times (0.08 + (5 - q) \times 0.02))
 \end{equation}
 
+Where $q$ denotes the user's self-rated accuracy of recall, according to table \ref{tbl_sm2ratings}.
+\begin{table}[h!]
+\caption{User Rated Answers for the SuperMemo 2 Algorithm \cite{wozniak_optimization_1990}}
+\label{tbl_sm2ratings}
+\begin{tabular}{|c|l|}
+\hline
+5 & Perfect response \\
+4 & Correct response after a hesitation \\
+3 & Correct response recalled with serious difficulty \\
+\hline
+2 & Incorrect response; where the correct one seemed easy to recall \\
+1 & Incorrect response; the correct one remembered \\
+0 & Complete blackout. \\
+\hline
+\end{tabular}
+\end{table}
+
 The easiness factor is bounded by the values $1.1 \leq EF \leq 2.5$ where 1.1 indicates
 the most difficult flash-cards and 2.5 indicates the easiest. Before a user begins studying a
 flash-card for the very first time, the associated easiness factor is set to 2.5.
 
 \section{Similar Projects} \label{background_similarprojects}
 \subsection*{Memrise}
-Memrise is a private company which produces web-based flashcard software.
+Memrise is a private company which produces web-based flashcard software. Memrise states
+on their website: \textit{``Our memory experts have spent long, sleepless nights
+tinkering with exotic algorithms so as to be able precisely to estimate the
+point at which you're about to forget it.''} \cite{memrise_website}. Their implementation
+details however have not been made public.
 
 \subsection*{The Mnemosyne Project}
 Mnemosyne is open source spaced repetition software collecting anonymised data from its many users in order
 to evaluate the effectiveness of the implemented spaced repetition algorithm \cite{peter_bienstman_principles_2012}.
-Mnemosyne uses a modified version of the Supermemo algorithm.
+Mnemosyne uses a modified version of the Supermemo algorithm. Mnemosyne chose to avoid SuperMemo 3+ algorithms
+due to their complexity, however has recently moved to the SuperMemo 11 algorithm \cite{peter_bienstman_principles_2012}.
 The project does not appear to have produced any papers or research publications at this time.
 
 \begin{figure}[h!]
@@ -304,7 +319,14 @@ The project does not appear to have produced any papers or research publications
 
 \subsection*{Anki}
 Anki is one of the most full-featured open-source spaced repetition applications available.
-Anki allows users to attach images, sounds, and even embed \LaTeX \ equations in flash-cards. 
+Anki allows users to attach images, sounds, and even embed \LaTeX \ equations in flash-cards. The
+software is not designed for any research purposes but rather purely for learning and
+review of information.
 
 The developer of Anki decided against SuperMemo 3 and later algorithms instead opting for
-the SuperMemo 2 algorithm because of the complexity that the SM3+ algorithms introduce\cite{anki_faq}.
+the SuperMemo 2 algorithm because of the complexity that the SM3+ algorithms introduce \cite{anki_faq}.
+
+\begin{figure}[h!]
+\includegraphics[width=6cm]{img/anki.png}
+\caption{Screenshot of Anki in use}
+\end{figure}
