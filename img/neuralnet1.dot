@@ -1,0 +1,1 @@
+digraph neuralnet1 { rankdir=LR; subgraph cluster_0{ style=filled; color=lightgrey; x1; x2; x3; } x1->y[label=w1]; x2->y[label=w2]; x3->y[label=w3] }

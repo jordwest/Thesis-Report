@@ -7,6 +7,7 @@
 \documentclass[12pt,a4paper,twoside,openright]{book}
 \usepackage[margin=2cm]{geometry}
 \usepackage[pdftex]{graphicx}
+\usepackage{graphviz}
 \usepackage{amsmath}
 \usepackage{float}
 \usepackage{hyperref}
@@ -14,6 +15,7 @@
 \usepackage[justification=centering]{caption}
 \usepackage{url}
 \usepackage{biblatex}
+\usepackage{multirow}
 \bibliography{thesis.bib}
 
 \title{Predicting Responses to Spaced Repetition Flash Cards with Machine Learning Techniques}
@@ -58,7 +60,6 @@ for putting up with me throughout the project, and Mum and Dad for supporting me
 \mainmatter
 \input{introduction.tex}
 \input{background.tex}
-\input{goals.tex}
 \input{method.tex}
 \input{results.tex}
 \input{discussion.tex}
@@ -72,12 +73,15 @@ for putting up with me throughout the project, and Mum and Dad for supporting me
 \appendix
 \chapter{Participant Information Sheet}
 \label{appendix_participant_info_sheet}
+\newpage
 \fbox{\includegraphics[page=1,width=17cm]{appendix/participant_info_sheet.pdf}}
 \chapter{Participant Consent Form}
+
 \label{appendix_participant_consent_form}
 \fbox{\includegraphics[page=1,width=17cm]{appendix/participant_consent_form.pdf}}
 \chapter{Original Wireframes}
 \label{appendix_wireframes}
+
 \fbox{\includegraphics[page=1,width=17cm]{appendix/wireframes.pdf}}\newpage
 \fbox{\includegraphics[page=2,width=17cm]{appendix/wireframes.pdf}}\newpage
 \fbox{\includegraphics[page=3,width=17cm]{appendix/wireframes.pdf}}\newpage
@@ -85,4 +89,7 @@ for putting up with me throughout the project, and Mum and Dad for supporting me
 \fbox{\includegraphics[page=5,width=17cm]{appendix/wireframes.pdf}}\newpage
 \fbox{\includegraphics[page=6,width=17cm]{appendix/wireframes.pdf}}
 
+\chapter{Data}
+Data on this CD is also available at \url{https://github.com/jordwest/thesis}
+\label{appendix_cd}
 \end{document}

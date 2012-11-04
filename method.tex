@@ -1,7 +1,14 @@
 \chapter{Methods and Materials}
 \label{methods}
+\input{goals.tex}
 \section{Experimental Design}
-\section{Ethical Clearance}
+\section{Participants}
+\subsection{Participant Recruitment}
+Participants were students of the introductory Japanese course JAPN1023. The author
+introduced the project in the first week of classes and handed out registration cards
+to students who chose to participate and signed a participant consent form.
+
+\subsection{Ethical Clearance}
 \label{methods_ethical}
 As with any project involving humans, the details of the project must be reviewed and 
 approved by the University Human Ethics Committee prior to any student participation.
@@ -113,10 +120,12 @@ to the live application quickly in order to respond to bugs and to reduce time s
 \paragraph{Backbone.JS}
 (\url{http://www.backbonejs.org/})
 
-Backbone.js is an open source Javascript framework providing a model oriented structure for web applications.
-It was selected because\ldots
-
-% TODO Complete Backbone section
+Backbone.js is an open source Javascript framework providing a model oriented structure
+for Javascript heavy web applications. Backbone.js allows data to be easily linked
+to user interface components and synchronise with the server, so that any changes
+to the underlying data automatically update the user interface. 
+It was selected because of its integration with Ruby on Rails and because of the
+author's familiarity with the library.
 
 \paragraph{Highcharts}
 (\url{http://www.highcharts.com/})
@@ -157,16 +166,153 @@ the experiment without purchasing expensive software such as MATLAB. Additionall
 available in R (such as e1071, the Support Vector Machine library) generally provide more customisability
 over those available in MATLAB as standard.
 
-\subsection{Data Entry}
-\subsection{Screen Mockups}
-\subsection{Spaced Repetition Algorithm}
+\subsection{Functionality}
+\subsubsection{Reviewing}
+The review interface was designed with a responsive Javascript frontend in order
+to reduce lag between reviews. While a student is reviewing a flash-card, the following
+card is pre-loaded and displayed immediately after a response is selected.
+\begin{figure}
+\fbox{\includegraphics[width=11cm]{img/review_front.jpg}}
+\caption{The `front' of a flash-card during review}
+\label{fig_review_front}
+\end{figure}
+
+\begin{figure}
+\fbox{\includegraphics[width=11cm]{img/review_back.jpg}}
+\caption{The `back' of a flash-card during review. Here the user is asked to rate
+their response}
+\label{fig_review_back}
+\end{figure}
+
+Figures \ref{fig_review_front} and \ref{fig_review_back} show the `front' and `back' of the
+flash-cards respectively. The user is prompted to recall the pronounciation and English
+meaning of the word on the front, then after choosing to reveal the answer can compare
+their answer with that written on the back.
+
+Finally the user rates their recall on the 0-5 scale using either the buttons on screen or
+the keyboard, and the next card is then displayed.
+
+\subsubsection{Withdrawal of Participation}
+A condition of ethical approval, participants are able to withdraw
+from participation from within the software at any time
+using the `Withdraw Participation' function which immediately deletes all associated
+information.
+
+\subsubsection{Password Reset and Change}
+Students are able to reset their password by entering their email address into a
+password reset page. An email is sent containing a new random password which they
+can use to log in and then change their password.
+ 
+
+\subsubsection{Administration}
+An secured administration section was built to facilitate the operation of system, including
+features such as:
+\begin{itemize}
+  \item Generating registration codes
+  \item Viewing error logs
+  \item Downloading anonymised formatted review data
+\end{itemize} 
+
+\subsubsection{Registration Codes}
+An interface for the administrator allows generation of registration codes. Registration
+codes are strings of random numbers and letters which can be used to create an account.
+Each code can be used only once, and is associated with a role in the system which carries
+over to the account created with the code. For example, the administrator may wish to
+create 50 participant codes, 5 tester codes and 1 teacher code which can then be given
+to the respective users. This ensures a hard limit on the number of each type of user
+that can register.
+
+The system also provides an interface for printing sheets of registration codes on cards.
+This allows the sheets to be printed onto card and cut out to be individually handed
+to students. With over 100 students in the class, this feature was added to reduce the
+time in writing out 100 individual cards by hand.
+
+\begin{figure}
+\fbox{\includegraphics[page=1,width=6cm]{img/Registration_Codes.pdf}}
+\caption{Sample printout of registration codes}
+\label{fig_registrationcodes}
+\end{figure}
+
+\begin{figure}
+\fbox{\includegraphics[width=9cm]{img/reg_card.jpeg}}
+\caption{Sample registration card for a tester}
+\label{fig_registrationcodes}
+\end{figure}
+
+\subsubsection{Teacher Dashboard}
+A common feature in online learning environments is a dashboard for teachers to track
+student usage. A basic dashboard was designed to visualise usage of the system
+over time and to show information on the vocabulary list - which words were difficult
+and which were not so difficult for students to remember.
+
+\subsection{Vocabulary List}
+The vocabulary selected was the vocabulary for the JAPN1023 course in which the participants
+were enrolled. It is hoped that since the vocabulary is part of the course content, students
+will be encouraged to use the software to learn the vocabulary. A total of 240 words were
+entered into the database. 
+
+The vocabulary was entered into a spreadsheet and run by the course coordinator for verification.
+The vocabulary list was then exported to a .csv file and text manipulation software
+was used to convert the list to Ruby code which inserts records directly into the
+database. A .csv import mechanism was considered to replace this process, however
+since the import is a one-time process this was decided against.  
+
+\subsection{Spaced Repetition Algorithm Implementation}
+The spaced repetition algorithm was implemented in Ruby as part of the application.
+Data is stored in an SQL database. The variables required for the spaced repetition
+algorithm are stored in a `UserWords' table which contains a record for each individual
+user and vocabulary item. This means each time a new user is created, 240 records are added to the
+`UserWords' table to keep track of each word. Upon review, the variables are pulled from this
+table, recorded in
+the reviews table along with the user's response 
+and then a new interval and easiness factor calculated based on the previous
+values and the user response.
+
+In order to provide more review data at smaller intervals, the interval for the second 
+repetition was halved from the original SuperMemo 2 algorithm from 6 days to 3 days.
+This also affects subsequent reviews since each new interval is calculated on the
+previous interval.
+
+The same 0 to 5 rating system was used for the SuperMemo 2 algorithm, with a description of
+each rating written beside the review interface. As with the original SuperMemo 2 algorithm,
+if a user fails a review -- that is, selects 
+a response from 0 to 2 -- the repetition number is reset to zero and thus the interval
+reset. A flag is set against that item recording it as `failed' and it is shown
+again to the user in the same session until they recall the item correctly.
+The easiness factor however is not reset on failing an item and is calculated as per usual.
+
+The system selects cards for the user to review in the following order:
+\begin{enumerate}
+  \item Cards due for review
+  \item Failed cards
+  \item New cards
+\end{enumerate}
+
 \subsection{Data storage, formatting and output}
 
-* Insert list of tables and fields in the database %TODO DB Schema
+The application data is stored in an SQL database accessed with the Ruby on Rails
+framework. The following tables contain the major functionality:
+
+\begin{description}
+\item[Users] A listing of all registered users, and a secure one-way hash of their password information
+to provide login functionality.
+\item[Words] A listing of all 240 vocabulary items and their associated expression, meaning and readings.
+\item[UserWords] Records spaced repetition parameters for a particular user and word association.
+Each user has their own record of progress with each individual word.
+\item[Reviews] Records of every review completed with the software. A review captures the current state
+the associated UserWord record when a review is completed, and the user's selected answer for that review.
+The review table keeps track of a user's role so that teacher, administrator and tester review data
+can be removed when the data is exported leaving only participant review data.
+\item[UserLogins] Records each `login' by each user. Since users are not automatically logged out,
+a login is recorded whenever a student uses the software after a minimum 15 minute break.
+\item[UserInfos] Contains demographic data on the users - their gender and whether English is their first language.
+\end{description}
+
+A full listing of tables and fields is available in the /db/schema.rb file in the Membit source code.
 
 
-Review data is made available via an administrator login. The software converts the entire
-table of anonymised reviews to a .CSV file for download. CSV was chosen because of its portability --
+Review data is made available via an administrator login. The software converts the
+table of anonymised participant reviews to a .CSV file for download. CSV was chosen because of its portability --
 almost all data analysis packages support CSV files. Data could also be filtered before download, 
 to remove unwanted entries. Most importantly, it was made possible to filter out `new' reviews, ie.
 reviews for which it was the first time for a student to study a word. These reviews contain almost
@@ -174,7 +320,7 @@ no useful data for prediction since there is no history for that student reviewi
 
 Fields contained in the downloaded review data are described in table \ref{tbl_csvfields}
 
-\begin{table}[h!]
+\begin{table}
 \caption{Fields contained within downloaded data files}
 \label{tbl_csvfields}
 \begin{tabular}{|p{4cm}|c|p{9cm}|}
@@ -202,6 +348,8 @@ Previous Time to Answer & Continuous & The time the user took to answer on the p
 Word Average Easiness Factor & Continuous & Average easiness factor for this word for all users\\
 \hline
 \end{tabular}
+% Use own page
+\vspace*{4cm}
 \end{table}
 
 \section{Data Analysis and Prediction}
@@ -268,13 +416,29 @@ the entire set of users and not for individual users.
 
 \subsection{Prediction of Recall}
 
+Prediction of recall is carried out using the R programming language and packages
+which implement machine learning algorithms. Packages used include:
+\begin{description}
+\item[e1071] An implementation of libsvm, a common Support Vector Machine library
+\item[nnet] A neural network implementation supports multilayer perceptrons with 
+logistic and linear outputs.
+\end{description}
+
+The review data is downloaded as .csv from the administration section of the online
+learning environment. An R script loads the .csv file into the environment, strips
+out the irrelevant columns in the data, trains and validates the selected 
+machine learning algorithms on the data. Table \ref{tbl_inputoutputs} shows
+the variables that are kept from the review data and their usage for training
+and validation. Note that the output `Correct' is calculated based on the `User
+Rated Answer' and is simply a convenience to refer to whether or
+not the user correctly recalled a word without taking into account the subjective
+difficulty of recall.
+
 The inputs shown in table \ref{tbl_inputoutputs} are the same variables which are
 either stored or can be calculated from values stored alongside each user-word in
 the database by the spaced repetition algorithm. This means that given a well
 trained algorithm and a set of user-words for a user, it should be possible to
 calculate which words the user will correctly recall at any given point in time.
-
-
 
 \begin{table}[h!]
 \caption{Inputs and Outputs to Machine Learning Algorithms}

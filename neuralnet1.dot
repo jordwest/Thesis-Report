@@ -1,0 +1,1 @@
+digraph neuralnet1 {rankdir=LR;a->b;b->e;c->d}

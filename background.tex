@@ -1,4 +1,4 @@
-\chapter{Background}
+\chapter{Literature Review}
 \label{background}
 \section{Definitions}
 This section outlines some terms used for convenience in this report.
@@ -11,7 +11,7 @@ This section outlines some terms used for convenience in this report.
 When developing a computer algorithm which takes some data as an input and returns an output,
 we will usually look at the underlying mechanism as to how we come to that conclusion. However it is not
 always possible to know what is the underlying mechanism which produces an output
-given certain inputs.
+given certain inputs \cite{intro_to_machine_learning_2010}.
 
 What makes machine learning algorithms unique is that they in a sense `learn'; given a large
 enough set of observed inputs and outputs, a machine learning algorithm builds a model which infers
@@ -27,12 +27,120 @@ algorithms -- that is algorithms which return an output as a `class' rather than
 (regression). Additionally, we will only be looking at supervised learning since training data will contain
 outputs alongside inputs.
 
-The following sections describe the machine learning techniques that were used in this report.
+Complete descriptions of machine learning algorithms is beyond the scope of this report, however
+the following sections outline information relevant for the machine learning techniques
+that were used in this report.
 
-\subsection{Artificial Neural Network}
-%Multilayer perceptrons are a type of artificial neural network 
+\subsection{Multilayer Perceptrons}
+Artificial neural networks are a form of machine learning inspired by the neural connections
+in the brain. Although their similarity to biology essentially ends there, they are a useful
+tool for modelling connections between inputs and outputs. By connecting the inputs to the
+outputs via a certain weighting, observing a set of inputs and outputs and adjusting weights
+the network can essentially be `trained' produce those outputs given the same inputs.
+
+For example if we have three inputs connected directly to one output via
+weights $w_1$, $w_2$ and $w_3$, we achieve a network as shown in figure \ref{fig_neuralnet1}.
+
+\begin{figure}[h!]
+\digraph{neuralnet1}{
+	rankdir=LR;
+	subgraph cluster_0{
+		style=filled;
+		color=lightgrey;
+		x1;
+		x2;
+		x3;
+	}
+	x1->y[label=w1];
+	x2->y[label=w2];
+	x3->y[label=w3]
+}
+\caption{Simple network with 3 inputs and a single output}
+\label{fig_neuralnet1}
+\end{figure}
+
+
+At its simplest, this is essentially a representation of a linear function shown
+in equation \ref{eqn_neuralnet_linear}.
+
+\begin{equation}
+\label{eqn_neuralnet_linear}
+y = w_1x_1 + w_2x_2 + w_3x_3 =  \sum w_nx_n
+\end{equation}
+
+However, such networks are limited in that they can only solve linear
+problems \cite{intro_to_machine_learning_2010}. Multilayer
+perceptrons take this model a step further and add `hidden layers' of units between the
+input and output as shown in figure \ref{fig_neuralnet2} which allows non-linear regression.
+
+\begin{figure}[h!]
+\digraph{neuralnet2}{
+	rankdir=LR;
+	subgraph cluster_0{
+		style=filled;
+		color=lightgrey;
+		x1;
+		x2;
+		x3;
+	}
+	subgraph cluster_1{
+		color=blue
+		h1;
+		h2;
+	}
+	subgraph cluster_3{
+		y1;
+	}
+	x1->h1[label=w11,splines=false];
+	x1->h2[label=w12,splines=false];
+	x2->h1[label=w21,splines=false];
+	x2->h2[label=w22,splines=false];
+	x3->h1[label=w31,splines=false];
+	x3->h2[label=w32,splines=false];
+	h1->y1;
+	h2->y1;
+}
+\caption{Multilayer perceptron}
+\label{fig_neuralnet2}
+\end{figure}
+
+In order for the networks to `learn', the common technique is backpropogation with gradient
+descent in which
+the weights are initialised randomly to small values and then adjusted based on input and
+output values, error, and constants for momentum and learning rate. This process
+continues until convergence of error is reached. The momentum
+specifies how much of the previous weight should be incorporated, while the learning
+rate adjusts the magnitude of change \cite{intro_to_machine_learning_2010}.
+
+Overtraining can occur when training the network over too many iterations. A classic symptom
+of overtraining is when training error remains fixed over many iterations but validation error
+continues to increase \cite{intro_to_machine_learning_2010}.
+
+Often a single hidden layer is used due to the increased complexity introduced by adding
+several hidden layers. Adjusting the number of units in a hidden layer can affect the performance
+of the network, so a common approach the finding the best performance is to begin with a large or
+small number of units and gradually decrease or increase the number of units \cite{intro_to_machine_learning_2010}.
 
 \subsection{Support Vector Machines}
+
+A support vector machine (SVM) -- also known as a kernel machine -- is a method for
+linear classification and regression. SVMs operate in an $n$-dimensional space, where
+$n$ is the number of input variables. By using a hyperplane in this space which separates
+instances based on their class, it is possible to place new instances in the space
+in order to predict their class.
+
+However, this approach does not work for nonlinear problems. In nonlinear cases, a `kernel trick'
+is used -- a kernel function is applied to the data which extends the data into an extra
+dimension. Common kernel functions include:
+
+\begin{itemize}
+\item None (Linear) - No kernel function is applied.
+\item Polynomial
+\item Radial-basis
+\item Sigmoidal
+\end{itemize}
+
+
 \section{The Forgetting Curve} \label{background_forgettingcurves}
 The forgetting curve was first hypothesised by Hermann
 Ebbinghaus\cite{ebbinghaus_memory:_1913} who observed that forgetting tends
@@ -129,11 +237,15 @@ and some algorithms take this into account and adjust based on the difficulty of
 particular word. An example of how a card might be rescheduled
 is shown in table \ref{tbl_spacedrepetitionexample}.
 
-Unfortunately very little publicly available research on spaced repetition
-algorithms has been carried out. Dempster
-postulates\cite{dempster_spacing_effect_1988} that it has simply not caught
-on since it has not been known for very long, has not yet been demonstrated
-satisfactorily with %TODO finish paragraph
+Unfortunately little publicly available research on spaced repetition
+algorithms has been carried out. Dempster (1988)
+postulated several potential reasons that spaced repetition itself has failed 
+to catch on in education which include a lack of demonstration in school-like activities, the
+relative recency of its development, and a lack of understanding of the effect
+\cite{dempster_spacing_effect_1988}.
+ 
+Nonetheless, spaced repetition is a valuable tool in this project because of its
+inherent tracking of several parameters for each vocabulary item for each student.
 
 \subsubsection*{SuperMemo 2 Algorithm (SM2)}
 As one of the first spaced repetition applications available for personal computers, %TODO Ref
@@ -168,7 +280,7 @@ equation \ref{eqn_sm2_4}
 
 \begin{equation}
 \label{eqn_sm2_4}
-EF := EF + (0.1 - (5 - q) \times (0.08 + (5 - q) * 0.02))
+EF := EF + (0.1 - (5 - q) \times (0.08 + (5 - q) \times 0.02))
 \end{equation}
 
 The easiness factor is bounded by the values $1.1 \leq EF \leq 2.5$ where 1.1 indicates

@@ -1,10 +1,91 @@
 \chapter{Discussion}
-\section{Changes to Original Scope}
-* Removed testing and scoring tests
-* Removed typed answers, self evaluation only
+
+
 \section{Evaluation}
 \subsection{Usage of Software}
+Overall usage of the software was lower than expected. Although 80 consent forms were
+collected, only 28 students actually registered with the software. Participants were
+provided with contact details of the author, however no reports of lost registration
+codes or difficulties in registering were made.
+
+Usage after registration was equally low. A majority of users logged in only once or twice
+after registration and stopped usage after this. A few users shown in table \ref{tbl_topusers}
+made up the majority of review data and thus the data was likely skewed towards these users
+particularly after removing `new' reviews.
+
+Quizzes were held in weeks 5, 8, and 11 which appear to have had little effect on the
+usage of the software
+
+\subsection{Forgetting Curves}
+The forgetting curves appear to bear some resemblance in shape to those hypothesised
+by Ebbinghaus, however too little data is available to support it with any certainty.
+It appears that chance of recall for shorter periods of time does increase with each
+spaced review.
+
 \subsection{Prediction of Recall}
+* Can say with 70\% certainty that user will recall the word at any point in time
+by feeding in the words
+
+Overall the results show that there is some possibility of correctly predicting whether
+a student will recall a word given the spaced repetition parameters and a history of
+reviewing that word. With an approximately 70\% chance
+
+The confusion matrix in figure \ref{tbl_confusionmatrix_ura} shows that predictions
+for the user's answer are generally close to the actual answer selected, however
+predictions tend towards the answer 2. It was observed that users often chose the
+user rated answer 2, suggesting that they almost knew the word but just couldn't quite remember it at
+that time, recalling it easily after seeing the answer.
+
+With the similarity of results among the machine learning techniques employed, it
+appears that the limitations are with the data rather than with the machine learning
+techniques and parameters selected. With these results it seems that there is a
+reasonable correlation
+between the variables stored by the spaced repetition algorithm and the chance of
+recalling the meaning and pronounciation of a foreign word, however they are limited.
+
+The addition of other variables into the review data could improve correlation,
+however where these variables are sourced is a complicated matter. Additional variables
+could potentially include relevant information such as how long ago the words were studied
+during class, the number of kanji in the sentence, the chance of confusing the word
+with other similar looking words, and the word frequency in the target language.
+
+One drawback of this study is the subjective rating of recall. Although the ratings
+were defined on the screen where students review, students could select any rating
+
+\section{Changes to Original Scope}
+A number of changes were made over the course of the project. Originally it was
+planned to include an online quiz with which to score students and compare their
+scores to a predicted score by the machine learning algorithms. This was removed
+from the project in order to refine the scope of work. Since the machine learning
+algorithms should be evaluated on their own merit, it was decided that these should
+be focused on rather than prediction of test scores using the machine learning
+algorithms.
+
+As shown in the original wireframes in appendix \ref{appendix_wireframes}, during review
+users would be asked to enter their own answer before the correct answer was revealed
+to them. They would then rate their own answer against the correct answer. This was
+to be used for gathering possible answer variations for a particular word
+which could then be used to automatically grade a quiz. However since the quiz
+component was removed, this was no longer required. Additionally it would introduce
+too many variables -- if incorrect answers were marked as correct, they would then
+be graded incorrectly in the quizzes. This combined with the fact that manually
+grading many quizzes could prove too much work, this was removed from the scope
+and users instead evaluate their recall without entering their answer.
+
+Several variables were added to the review data output after reviewing began in an
+attempt to improve the accuracy of prediction. These
+variables were:
+\begin{itemize}
+  \item Previous Answer
+  \item Previous Time to Answer
+  \item Word Average Easiness Factor
+\end{itemize}
+
+Since all of these values can be calculated from past data, the values were
+retroactively added to review data and all new reviews automatically included them.
+The addition of these variables improved the accuracy across all machine learning 
+algorithms by 2-4\%.
+
 \section{Potential Future Work}
 * Vary the reschedule date slightly from the interval so that data is available for more
 than just the common intervals
